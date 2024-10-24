@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/903674473291749414
+creation_time: 1729784701338
+experiment_id: '903674473291749414'
+last_update_time: 1729784701338
+lifecycle_stage: active
+name: spotify_classification
