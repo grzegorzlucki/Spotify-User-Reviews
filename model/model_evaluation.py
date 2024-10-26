@@ -8,38 +8,11 @@ from sklearn.metrics import classification_report, f1_score
 import mlflow
 import optuna
 from mlflow.models import infer_signature
-# from data_processing.data_transformer import TextPreprocessor
-
-import re
-import nltk
-from nltk.corpus import stopwords
-from sklearn.base import BaseEstimator, TransformerMixin
-
-# nltk.download('punkt')
-# nltk.download('stopwords')
-
-#############################################################################
-class TextPreprocessor(BaseEstimator, TransformerMixin):
-    def __init__(self):
-        pass
-
-    def pre_preparation(self, text: str) -> str:
-        text = re.sub(r'Ã[\x80-\xBF]+', ' ', text) 
-        text = re.sub(r'[^a-zA-Z\s]', ' ', text) 
-        text = re.sub(r'\s+', ' ', text)
-        text = text.strip()
-        return text
-
-    def stopwords_removal(self, words: list) -> list:
-        stop_words = stopwords.words('english')
-        return [word for word in words if word not in stop_words]
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        return [" ".join(self.stopwords_removal(nltk.word_tokenize(self.pre_preparation(doc)))) for doc in X]
-#############################################################################
+import pickle
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from text_preprocessor_package.preprocessor import TextPreprocessor
 
 
 data = pd.read_csv('./data/DATASET.CSV')
@@ -49,12 +22,12 @@ label_encoder = LabelEncoder()
 labels = data['label'].values
 X = data['Review'].values
 
-
-
 y = label_encoder.fit_transform(labels)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+with open("model/label_encoder.pkl", "wb") as f:
+    pickle.dump(label_encoder, f)
 
 mlflow.set_tracking_uri(uri="http://127.0.0.1:8080")
 mlflow.set_experiment("spotify_classification")

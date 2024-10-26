@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1729965029335
+current_stage: None
+description: ''
+last_updated_timestamp: 1729965029335
+name: ' spotify_classifier'
+run_id: c9e207bb277e419e8ea82472d6bf5ea7
+run_link: ''
+source: mlflow-artifacts:/903674473291749414/c9e207bb277e419e8ea82472d6bf5ea7/artifacts/model
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/903674473291749414/c9e207bb277e419e8ea82472d6bf5ea7/artifacts/model
+user_id: null
+version: 1
