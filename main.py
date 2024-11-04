@@ -4,6 +4,9 @@ from typing import List
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from text_preprocessor_package.preprocessor import TextPreprocessor
 
 
@@ -26,17 +29,17 @@ def get_label_encoder(encoder_path):
     with open(encoder_path, "rb") as f:
         return pickle.load(f)
 
+model = get_model(MODEL_PATH)
+label_encoder = get_label_encoder(ENCODER_PATH)
+
 @app.post("/predict")
 def predict(input_data: List[str]):
-    
-    model = get_model(MODEL_PATH)
-    label_encoder = get_label_encoder(ENCODER_PATH)
-    
+
     pipeline = Pipeline([
-        ('preprocessor', TextPreprocessor()),
-        ('tfidf', TfidfVectorizer(max_features=10000, lowercase=True, stop_words='english')),
+        # ('preprocessor', TextPreprocessor()),
+        # ('tfidf', TfidfVectorizer(max_features=10000, lowercase=True, stop_words='english')),
         ('clf', model)
     ])
-    pred = pipeline.predict([input_data])
-    return label_encoder.inverse_transform(pred)[0]
     
+    pred = pipeline.predict(input_data)
+    return {"prediction": label_encoder.inverse_transform(pred).tolist()}
