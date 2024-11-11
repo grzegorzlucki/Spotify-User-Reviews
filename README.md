@@ -2,6 +2,7 @@
 
 ## Overview
 The Spotify User Reviews project processes, analyzes, and models Spotify user feedback. Using NLP and machine learning, it classifies user sentiment and extracts insights. The workflow includes data preprocessing, model training, evaluation, and deployment.
+Dataset available on [Kaggle: Spotify Dataset](https://www.kaggle.com/datasets/alexandrakim2201/spotify-dataset).
 
 ## Project Structure
 
